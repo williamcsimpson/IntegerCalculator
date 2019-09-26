@@ -19,8 +19,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int BUTTON_8_VAL = 8;
     private static final int BUTTON_9_VAL = 9;
 
+    private static final int NO_OPERATOR_CODE = -1;
+    private static final int PLUS_CODE = 0;
+    private static final int MINUS_CODE = 1;
+    private static final int STAR_CODE = 2;
+    private static final int SLASH_CODE = 3;
+
+    private static final int INVERT = -1;
+
     private static final int BASE = 10;
 
+    private static final String DISPLAY_EMPTY = "";
     private static final String DISPLAY_DEFAULT = "0";
 
     private static final String OVERFLOW_ERROR = "OVERFLOW";
@@ -29,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
     private String displayVal = "0";
 
     //Stores first operand
-    private int  operand1 = 0;
+    private int operand1 = 0;
+
+    //holds value of operator
+    private int operator = -1;
 
     private boolean error = false;
 
@@ -41,18 +53,85 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Called when buttonPlus is pressed
+     *
+     * @param view does something idk...
+     */
+    public void buttonPlusPressed( View view ) {
+        if( !error ){
+            if( operator == NO_OPERATOR_CODE) {
+                operand1 = Integer.parseInt(displayVal, BASE);
+                displayVal = DISPLAY_DEFAULT;
+                updateDisplay();
+            }
+            operator = PLUS_CODE;
+        }
+    }
+    /**
+     * Called when buttonEnter is pressed
+     *
+     * @param view does something idk...
+     */
+    public void buttonEnterPressed( View view ) {
+        if(error) {
+            displayVal = DISPLAY_DEFAULT;
+            error = false;
+            operator = NO_OPERATOR_CODE;
+        }
+        switch(operator){
+            case NO_OPERATOR_CODE:
+                break;
+            case PLUS_CODE:
+                int operand2 = Integer.parseInt(displayVal,BASE);
+                int result = operand1 + operand2;
+                displayVal = Integer.toString(result);
+                break;
+            case MINUS_CODE:
+                displayVal = Integer.toString(operand1 - Integer.getInteger(displayVal, BASE) );
+                break;
+            case STAR_CODE:
+                displayVal = Integer.toString(operand1 * Integer.getInteger(displayVal, BASE) );
+                break;
+            case SLASH_CODE:
+                displayVal = Integer.toString(operand1 / Integer.getInteger(displayVal, BASE) );
+                break;
+            default:
+                break;
+        }
+        updateDisplay();
+        operand1 = 0;
+        operator = NO_OPERATOR_CODE;
+    }
+
+    /**
+     * Called when buttonInvert is pressed
+     *
+     * @param view does something idk...
+     */
+    public void buttonInvertPressed( View view ){
+        if(!error){
+            int currentVal = Integer.valueOf(displayVal, BASE);
+            currentVal *= INVERT;
+            displayVal = Integer.toString(currentVal);
+        } else {
+            displayVal = DISPLAY_DEFAULT;
+        }
+        updateDisplay();
+    }
+
+    /**
      * Called when user presses button0
      *
      * @param view used for something idk...
      */
     public void button0Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {
@@ -74,12 +153,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void button1Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {
@@ -101,12 +180,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void button2Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {
@@ -128,12 +207,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void button3Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {
@@ -155,12 +234,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void button4Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {
@@ -182,12 +261,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void button5Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {
@@ -209,12 +288,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void button6Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {
@@ -236,12 +315,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void button7Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {
@@ -263,12 +342,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void button8Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {
@@ -290,12 +369,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void button9Pressed( View view ) {
         if( error ) {
-            displayVal = DISPLAY_DEFAULT;
+            displayVal = DISPLAY_EMPTY;
             error = false;
             updateDisplay();
         } else {
             try {
-                if( Integer.parseInt(displayVal) != Integer.parseInt(DISPLAY_DEFAULT) ) {
+                if( Integer.parseInt(displayVal) == Integer.parseInt(DISPLAY_DEFAULT) ) {
                     displayVal = "";
                 }
             } catch (NumberFormatException e) {

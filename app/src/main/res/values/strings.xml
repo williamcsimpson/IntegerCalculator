@@ -17,4 +17,5 @@
     <string name="button_invert_text">*-1</string>
     <string name="button_enter_text">ENTER</string>
     <string name="display_value">0</string>
+    <string name="button_clear_text">CLEAR</string>
 </resources>
