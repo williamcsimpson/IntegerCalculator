@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+
 public class MainActivity extends AppCompatActivity {
 
     //Constants for button values
@@ -44,12 +45,29 @@ public class MainActivity extends AppCompatActivity {
     private int operator = -1;
 
     private boolean error = false;
+    private boolean clearDisplay = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    /**
+     * Called when buttonClear is pressed
+     *
+     * @param view idk dude
+     */
+    public void buttonClearPressed( View view ){
+        if( displayVal.equals(DISPLAY_DEFAULT) ) {
+            error = false;
+            operand1 = 0;
+            operator = NO_OPERATOR_CODE;
+        }
+        displayVal = DISPLAY_DEFAULT;
+        updateDisplay();
+        clearDisplay = false;
     }
 
     /**
@@ -66,6 +84,55 @@ public class MainActivity extends AppCompatActivity {
             }
             operator = PLUS_CODE;
         }
+        clearDisplay = false;
+    }
+    /**
+     * Called when buttonMinus is pressed
+     *
+     * @param view does something idk...
+     */
+    public void buttonMinusPressed( View view ) {
+        if( !error ){
+            if( operator == NO_OPERATOR_CODE) {
+                operand1 = Integer.parseInt(displayVal, BASE);
+                displayVal = DISPLAY_DEFAULT;
+                updateDisplay();
+            }
+            operator = MINUS_CODE;
+        }
+        clearDisplay = false;
+    }
+    /**
+     * Called when buttonStar is pressed
+     *
+     * @param view does something idk...
+     */
+    public void buttonStarPressed( View view ) {
+        if( !error ){
+            if( operator == NO_OPERATOR_CODE) {
+                operand1 = Integer.parseInt(displayVal, BASE);
+                displayVal = DISPLAY_DEFAULT;
+                updateDisplay();
+            }
+            operator = STAR_CODE;
+        }
+        clearDisplay = false;
+    }
+    /**
+     * Called when buttonSlash is pressed
+     *
+     * @param view does something idk...
+     */
+    public void buttonSlashPressed( View view ) {
+        if( !error ){
+            if( operator == NO_OPERATOR_CODE) {
+                operand1 = Integer.parseInt(displayVal, BASE);
+                displayVal = DISPLAY_DEFAULT;
+                updateDisplay();
+            }
+            operator = SLASH_CODE;
+        }
+        clearDisplay = false;
     }
     /**
      * Called when buttonEnter is pressed
@@ -85,15 +152,19 @@ public class MainActivity extends AppCompatActivity {
                 int operand2 = Integer.parseInt(displayVal,BASE);
                 int result = operand1 + operand2;
                 displayVal = Integer.toString(result);
+                clearDisplay = true;
                 break;
             case MINUS_CODE:
-                displayVal = Integer.toString(operand1 - Integer.getInteger(displayVal, BASE) );
+                displayVal = Integer.toString(operand1 - Integer.parseInt(displayVal, BASE) );
+                clearDisplay = true;
                 break;
             case STAR_CODE:
-                displayVal = Integer.toString(operand1 * Integer.getInteger(displayVal, BASE) );
+                displayVal = Integer.toString(operand1 * Integer.parseInt(displayVal, BASE) );
+                clearDisplay = true;
                 break;
             case SLASH_CODE:
-                displayVal = Integer.toString(operand1 / Integer.getInteger(displayVal, BASE) );
+                displayVal = Integer.toString(operand1 / Integer.parseInt(displayVal, BASE) );
+                clearDisplay = true;
                 break;
             default:
                 break;
@@ -117,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
             displayVal = DISPLAY_DEFAULT;
         }
         updateDisplay();
+        clearDisplay = false;
     }
 
     /**
@@ -125,6 +197,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button0Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
@@ -152,6 +228,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button1Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
@@ -179,6 +259,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button2Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
@@ -206,6 +290,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button3Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
@@ -233,6 +321,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button4Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
@@ -260,6 +352,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button5Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
@@ -287,6 +383,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button6Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
@@ -314,6 +414,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button7Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
@@ -341,6 +445,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button8Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
@@ -368,6 +476,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view used for something idk...
      */
     public void button9Pressed( View view ) {
+        if(clearDisplay){
+            displayVal = DISPLAY_DEFAULT;
+            clearDisplay = false;
+        }
         if( error ) {
             displayVal = DISPLAY_EMPTY;
             error = false;
